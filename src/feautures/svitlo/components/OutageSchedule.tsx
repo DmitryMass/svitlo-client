@@ -22,12 +22,14 @@ export const OutageSchedule = () => {
     data: plannedData,
     isLoading: isPlannedLoading,
     isError: isPlannedError,
+    error: plannedError,
   } = usePlannedOutages(dsoId);
 
   const {
     data: probableData,
     isLoading: isProbableLoading,
     isError: isProbableError,
+    error: probableError,
   } = useProbableOutages(dsoId);
 
   // Получаем список групп (приоритет - из данных, иначе дефолтный список)
@@ -89,6 +91,7 @@ export const OutageSchedule = () => {
           slots={plannedSlots}
           isLoading={isPlannedLoading}
           isError={isPlannedError}
+          error={plannedError}
           type="planned"
         />
 
@@ -97,6 +100,7 @@ export const OutageSchedule = () => {
           slots={probableSlots}
           isLoading={isProbableLoading}
           isError={isProbableError}
+          error={probableError}
           type="probable"
         />
       </div>

@@ -1,4 +1,5 @@
 import type { OutageInterval } from '@/shared/types/svitlo.types';
+import { RateLimitError } from '@/shared/api/axios-instance';
 import { formatTimeRange } from '@/shared/utils/time';
 import { Alert, AlertDescription, AlertTitle } from '@/shared/ui/alert';
 import {
@@ -9,13 +10,14 @@ import {
   TableHeader,
   TableRow,
 } from '@/shared/ui/table';
-import { AlertCircle, Lightbulb, Zap } from 'lucide-react';
+import { AlertCircle, Lightbulb, Zap, Clock } from 'lucide-react';
 
 interface OutageTableProps {
   title: string;
   slots: OutageInterval[];
   isLoading: boolean;
   isError: boolean;
+  error?: Error | null;
   type: 'planned' | 'probable';
 }
 
@@ -24,8 +26,10 @@ export const OutageTable = ({
   slots,
   isLoading,
   isError,
+  error,
   type,
 }: OutageTableProps) => {
+  const isRateLimitError = error instanceof RateLimitError;
 
   if (isLoading) {
     return (
@@ -56,13 +60,25 @@ export const OutageTable = ({
           )}
           {title}
         </h3>
-        <Alert variant="destructive" className="bg-white border-red-200 shadow-sm">
-          <AlertCircle className="h-4 w-4" />
-          <AlertTitle>Помилка API</AlertTitle>
-          <AlertDescription>
-            Тимчасова помилка при отриманні даних. Спробуйте пізніше.
-          </AlertDescription>
-        </Alert>
+        {isRateLimitError ? (
+          <Alert className="bg-white border-orange-200 shadow-sm">
+            <Clock className="h-4 w-4 text-orange-600" />
+            <AlertTitle className="text-orange-800 font-semibold">
+              Перевищено ліміт запитів
+            </AlertTitle>
+            <AlertDescription className="text-orange-700">
+              {error.message || 'Ви перевищили ліміт запитів (50 на хвилину). Спробуйте через хвилину.'}
+            </AlertDescription>
+          </Alert>
+        ) : (
+          <Alert variant="destructive" className="bg-white border-red-200 shadow-sm">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Помилка API</AlertTitle>
+            <AlertDescription>
+              Тимчасова помилка при отриманні даних. Спробуйте пізніше.
+            </AlertDescription>
+          </Alert>
+        )}
       </div>
     );
   }
