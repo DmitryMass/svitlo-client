@@ -1,0 +1,21 @@
+echo "🔍 Running ESLint..."
+npm run lint
+
+if [ $? -eq 0 ]; then
+  echo "✅ ESLint passed"
+else
+  echo "❌ ESLint failed"
+  exit 1
+fi
+
+echo "🏗️  Building project..."
+npm run build
+
+if [ $? -eq 0 ]; then
+  echo "✅ Build successful"
+else
+  echo "❌ Build failed"
+  exit 1
+fi
+
+echo "✨ All checks passed! Proceeding with commit..."
