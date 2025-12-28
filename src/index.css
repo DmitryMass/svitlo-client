@@ -129,30 +129,4 @@
   body {
     @apply bg-background text-foreground;
   }
-
-  /* PWA smooth scrolling and prevent bounce */
-  html {
-    scroll-behavior: smooth;
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-  }
-
-  /* Optimize for touch devices */
-  * {
-    -webkit-tap-highlight-color: transparent;
-    -webkit-touch-callout: none;
-  }
-
-  /* Prevent text selection on touch */
-  button,
-  a {
-    -webkit-user-select: none;
-    user-select: none;
-  }
-
-  /* Enable smooth momentum scrolling */
-  .scrollable {
-    -webkit-overflow-scrolling: touch;
-    overflow-y: auto;
-  }
 }
