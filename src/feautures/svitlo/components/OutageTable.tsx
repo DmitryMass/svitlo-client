@@ -34,7 +34,7 @@ export const OutageTable = ({
   if (isLoading) {
     return (
       <div className="w-full">
-        <h3 className="text-lg font-semibold mb-3 flex items-center gap-2 text-zinc-800">
+        <h3 className="mb-3 flex items-center gap-2 text-lg font-semibold text-zinc-800">
           {type === 'planned' ? (
             <Zap className="h-5 w-5 text-yellow-500" />
           ) : (
@@ -52,7 +52,7 @@ export const OutageTable = ({
   if (isError) {
     return (
       <div className="w-full">
-        <h3 className="text-lg font-semibold mb-3 flex items-center gap-2 text-zinc-800">
+        <h3 className="mb-3 flex items-center gap-2 text-lg font-semibold text-zinc-800">
           {type === 'planned' ? (
             <Zap className="h-5 w-5 text-yellow-500" />
           ) : (
@@ -61,17 +61,21 @@ export const OutageTable = ({
           {title}
         </h3>
         {isRateLimitError ? (
-          <Alert className="bg-white border-orange-200 shadow-sm">
+          <Alert className="border-orange-200 bg-white shadow-sm">
             <Clock className="h-4 w-4 text-orange-600" />
-            <AlertTitle className="text-orange-800 font-semibold">
+            <AlertTitle className="font-semibold text-orange-800">
               Перевищено ліміт запитів
             </AlertTitle>
             <AlertDescription className="text-orange-700">
-              {error.message || 'Ви перевищили ліміт запитів (50 на хвилину). Спробуйте через хвилину.'}
+              {error.message ||
+                'Ви перевищили ліміт запитів (50 на хвилину). Спробуйте через хвилину.'}
             </AlertDescription>
           </Alert>
         ) : (
-          <Alert variant="destructive" className="bg-white border-red-200 shadow-sm">
+          <Alert
+            variant="destructive"
+            className="border-red-200 bg-white shadow-sm"
+          >
             <AlertCircle className="h-4 w-4" />
             <AlertTitle>Помилка API</AlertTitle>
             <AlertDescription>
@@ -83,7 +87,6 @@ export const OutageTable = ({
     );
   }
 
-  // Функция для получения CSS класса ячейки
   const getCellClass = (status: OutageInterval['type']) => {
     switch (status) {
       case 'Definite':
@@ -96,11 +99,13 @@ export const OutageTable = ({
     }
   };
 
-  // Функция для получения иконки и текста статуса
   const getStatusContent = (status: OutageInterval['type']) => {
     switch (status) {
       case 'Definite':
-        return { icon: <Zap className="h-4 w-4 text-yellow-600" />, text: 'Немає світла' };
+        return {
+          icon: <Zap className="h-4 w-4 text-yellow-600" />,
+          text: 'Немає світла',
+        };
       case 'Possible':
         return {
           icon: <AlertCircle className="h-4 w-4 text-blue-600" />,
@@ -108,7 +113,10 @@ export const OutageTable = ({
         };
       case 'NotPlanned':
       default:
-        return { icon: <Lightbulb className="h-4 w-4 text-emerald-600" />, text: 'Світло є' };
+        return {
+          icon: <Lightbulb className="h-4 w-4 text-emerald-600" />,
+          text: 'Світло є',
+        };
     }
   };
 
@@ -116,7 +124,7 @@ export const OutageTable = ({
 
   return (
     <div className="w-full">
-      <h3 className="text-lg font-semibold mb-3 flex items-center gap-2 text-zinc-800">
+      <h3 className="mb-3 flex items-center gap-2 text-lg font-semibold text-zinc-800">
         {type === 'planned' ? (
           <Zap className="h-5 w-5 text-yellow-500" />
         ) : (
@@ -126,7 +134,7 @@ export const OutageTable = ({
       </h3>
 
       {!hasData ? (
-        <Alert className="bg-white border-zinc-200 shadow-sm">
+        <Alert className="border-zinc-200 bg-white shadow-sm">
           <Lightbulb className="h-4 w-4 text-emerald-600" />
           <AlertTitle className="text-zinc-800">Немає даних</AlertTitle>
           <AlertDescription className="text-zinc-600">
@@ -134,12 +142,16 @@ export const OutageTable = ({
           </AlertDescription>
         </Alert>
       ) : (
-        <div className="rounded-lg border border-zinc-200 overflow-hidden shadow-md bg-white">
+        <div className="overflow-hidden rounded-lg border border-zinc-200 bg-white shadow-md">
           <Table>
             <TableHeader>
-              <TableRow className="bg-gradient-to-r from-zinc-50 to-zinc-100 border-b border-zinc-200">
-                <TableHead className="font-semibold text-zinc-700 text-base">Період</TableHead>
-                <TableHead className="font-semibold text-zinc-700 text-base">Статус</TableHead>
+              <TableRow className="border-b border-zinc-200 bg-gradient-to-r from-zinc-50 to-zinc-100">
+                <TableHead className="text-base font-semibold text-zinc-700">
+                  Період
+                </TableHead>
+                <TableHead className="text-base font-semibold text-zinc-700">
+                  Статус
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -148,8 +160,11 @@ export const OutageTable = ({
                 const timeRange = formatTimeRange(slot.start, slot.end);
 
                 return (
-                  <TableRow key={index} className="border-b border-zinc-100 hover:bg-zinc-50/80 transition-colors">
-                    <TableCell className="font-semibold text-zinc-900 text-base">
+                  <TableRow
+                    key={index}
+                    className="border-b border-zinc-100 transition-colors hover:bg-zinc-50/80"
+                  >
+                    <TableCell className="text-base font-semibold text-zinc-900">
                       {timeRange}
                     </TableCell>
                     <TableCell className={getCellClass(slot.type)}>

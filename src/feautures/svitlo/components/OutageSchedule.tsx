@@ -32,15 +32,12 @@ export const OutageSchedule = () => {
     error: probableError,
   } = useProbableOutages(dsoId);
 
-  // Получаем список групп (приоритет - из данных, иначе дефолтный список)
   const availableGroups = plannedData
     ? parseGroupsFromPlanned(plannedData)
     : ALL_GROUPS;
 
-  // Получаем индекс дня для probable outages (0 = сегодня, 1 = завтра)
   const dayIndex = day === 'today' ? 0 : 1;
 
-  // Получаем слоты для выбранной группы
   const plannedSlots = getPlannedSlotsForGroup(plannedData, group, day);
   const probableSlots = getProbableSlotsForGroup(
     probableData,

@@ -8,7 +8,6 @@ export type Day = 'today' | 'tomorrow';
 export const useSvitloParams = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // Приоритет: URL params → localStorage → дефолтные значения
   const provider =
     (searchParams.get('provider') as Provider) ||
     localStorageService.getProvider() ||
@@ -18,17 +17,13 @@ export const useSvitloParams = () => {
     localStorageService.getGroup() ||
     '1.1';
   const day =
-    (searchParams.get('day') as Day) ||
-    localStorageService.getDay() ||
-    'today';
+    (searchParams.get('day') as Day) || localStorageService.getDay() || 'today';
 
-  // Синхронизация URL с localStorage при первой загрузке
   useEffect(() => {
     const urlProvider = searchParams.get('provider');
     const urlGroup = searchParams.get('group');
     const urlDay = searchParams.get('day');
 
-    // Если в URL нет параметров, но есть в localStorage, обновляем URL
     if (!urlProvider || !urlGroup || !urlDay) {
       const savedPreferences = localStorageService.getPreferences();
 
@@ -50,15 +45,11 @@ export const useSvitloParams = () => {
       );
     }
   }, []);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  // Пустой массив зависимостей - выполняется только при монтировании
 
   const setProvider = useCallback(
     (newProvider: Provider) => {
-      // Сохраняем в localStorage
       localStorageService.saveProvider(newProvider);
 
-      // Обновляем URL
       setSearchParams((prev) => {
         const newParams = new URLSearchParams(prev);
         newParams.set('provider', newProvider);
@@ -70,10 +61,8 @@ export const useSvitloParams = () => {
 
   const setGroup = useCallback(
     (newGroup: Group) => {
-      // Сохраняем в localStorage
       localStorageService.saveGroup(newGroup);
 
-      // Обновляем URL
       setSearchParams((prev) => {
         const newParams = new URLSearchParams(prev);
         newParams.set('group', newGroup);
@@ -85,10 +74,8 @@ export const useSvitloParams = () => {
 
   const setDay = useCallback(
     (newDay: Day) => {
-      // Сохраняем в localStorage
       localStorageService.saveDay(newDay);
 
-      // Обновляем URL
       setSearchParams((prev) => {
         const newParams = new URLSearchParams(prev);
         newParams.set('day', newDay);

@@ -10,7 +10,6 @@ export const useProbableOutages = (dsoId: DsoId) => {
     queryFn: () => getProbableOutages(dsoId),
     staleTime: 1000 * 60 * 5,
     retry: (failureCount, error) => {
-      // Не повторять запрос при превышении лимита
       if (error instanceof RateLimitError) {
         return false;
       }

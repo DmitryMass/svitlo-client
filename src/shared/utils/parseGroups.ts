@@ -79,9 +79,6 @@ export const getProbableSlotsForGroup = (
   return groupData.slots[dayIndex.toString()] || [];
 };
 
-/**
- * Дефолтный список всех возможных групп
- */
 export const ALL_GROUPS: Group[] = [
   '1.1',
   '1.2',
