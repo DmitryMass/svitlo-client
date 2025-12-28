@@ -11,8 +11,21 @@ import { Toaster } from 'sonner';
 import './index.css';
 import { queryClient } from './shared/api/queryClient';
 import { router } from './router';
+import { registerSW } from 'virtual:pwa-register';
 
 moment.locale('uk');
+
+// Register PWA Service Worker
+registerSW({
+  onNeedRefresh() {
+    if (confirm('Доступна нова версія. Оновити?')) {
+      window.location.reload();
+    }
+  },
+  onOfflineReady() {
+    console.log('App ready to work offline');
+  },
+});
 
 const rootElement = document.getElementById('root') as HTMLElement;
 const root = ReactDOM.createRoot(rootElement);
