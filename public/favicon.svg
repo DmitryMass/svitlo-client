@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <style>.bulb{fill:none;stroke:#4a5568;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;}.clock{fill:#f6ad55;}</style>
+  </defs>
+  <title>Scheduled Power</title>
+  <path class="bulb" d="M20,44 C14.5,38.5 14.5,29.5 20,24 C25.5,18.5 34.5,18.5 40,24 C45.5,29.5 45.5,38.5 40,44 L38,48 L22,48 L20,44 Z M24,54 L36,54 M26,58 L34,58"/>
+  <circle class="clock" cx="30" cy="34" r="8" />
+  <path stroke="#fff" stroke-width="2" stroke-linecap="round" d="M30,34 L30,29 M30,34 L34,36"/>
+</svg>

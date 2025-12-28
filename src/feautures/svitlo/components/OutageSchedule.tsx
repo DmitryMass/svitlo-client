@@ -14,7 +14,8 @@ import { OutageTable } from './OutageTable';
 import { ProviderSelector } from './ProviderSelector';
 
 export const OutageSchedule = () => {
-  const { provider, group, day, setProvider, setGroup, setDay } = useSvitloParams();
+  const { provider, group, day, setProvider, setGroup, setDay } =
+    useSvitloParams();
   const dsoId = getDsoId(provider);
 
   const {
@@ -39,25 +40,32 @@ export const OutageSchedule = () => {
 
   // Получаем слоты для выбранной группы
   const plannedSlots = getPlannedSlotsForGroup(plannedData, group, day);
-  const probableSlots = getProbableSlotsForGroup(probableData, group, dsoId, dayIndex);
+  const probableSlots = getProbableSlotsForGroup(
+    probableData,
+    group,
+    dsoId,
+    dayIndex,
+  );
 
   return (
-    <div className="w-full max-w-[630px] mx-auto space-y-8 p-5">
-      <div className="text-center space-y-3">
-        <h1 className="text-3xl font-bold text-zinc-800">⚡ Графік відключень світла</h1>
-        <p className="text-zinc-600 text-lg">Дніпро</p>
+    <div className="mx-auto w-full max-w-[630px] space-y-8 p-5">
+      <div className="space-y-3 text-center">
+        <h1 className="text-3xl font-bold text-zinc-800">
+          ⚡ Графік відключень світла
+        </h1>
+        <p className="text-lg text-zinc-600">Дніпро</p>
       </div>
 
-      <div className="space-y-5 bg-white rounded-xl p-5 shadow-sm border border-zinc-200">
+      <div className="space-y-5 rounded-xl border border-zinc-200 bg-white p-5 shadow-sm">
         <div>
-          <label className="text-sm font-semibold mb-2 block text-zinc-700">
+          <label className="mb-2 block text-sm font-semibold text-zinc-700">
             Постачальник
           </label>
           <ProviderSelector value={provider} onValueChange={setProvider} />
         </div>
 
         <div>
-          <label className="text-sm font-semibold mb-2 block text-zinc-700">
+          <label className="mb-2 block text-sm font-semibold text-zinc-700">
             Група відключень
           </label>
           <GroupSelector
@@ -68,7 +76,7 @@ export const OutageSchedule = () => {
         </div>
 
         <div>
-          <label className="text-sm font-semibold mb-2 block text-zinc-700">
+          <label className="mb-2 block text-sm font-semibold text-zinc-700">
             День
           </label>
           <DaySelector value={day} onValueChange={setDay} />
