@@ -12,6 +12,7 @@ import { DaySelector } from './DaySelector';
 import { GroupSelector } from './GroupSelector';
 import { OutageTable } from './OutageTable';
 import { ProviderSelector } from './ProviderSelector';
+import { ScheduleLegend } from './ScheduleLegend';
 
 export const OutageSchedule = () => {
   const { provider, group, day, setProvider, setGroup, setDay } =
@@ -38,7 +39,7 @@ export const OutageSchedule = () => {
 
   const dayIndex = day === 'today' ? 0 : 1;
 
-  const plannedSlots = getPlannedSlotsForGroup(plannedData, group, day);
+  const plannedData_result = getPlannedSlotsForGroup(plannedData, group, day);
   const probableSlots = getProbableSlotsForGroup(
     probableData,
     group,
@@ -85,11 +86,12 @@ export const OutageSchedule = () => {
       <div className="space-y-6">
         <OutageTable
           title="Планові відключення"
-          slots={plannedSlots}
+          slots={plannedData_result.slots}
           isLoading={isPlannedLoading}
           isError={isPlannedError}
           error={plannedError}
           type="planned"
+          scheduleStatus={plannedData_result.status}
         />
 
         <OutageTable
@@ -100,6 +102,8 @@ export const OutageSchedule = () => {
           error={probableError}
           type="probable"
         />
+
+        <ScheduleLegend />
       </div>
     </div>
   );

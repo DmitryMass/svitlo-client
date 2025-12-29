@@ -40,15 +40,16 @@ export const parseGroupsFromProbable = (
  * @param data - ответ от API
  * @param group - группа отключений
  * @param day - день (today или tomorrow)
- * @returns массив интервалов отключений
+ * @returns объект с массивом интервалов отключений и статусом
  */
 export const getPlannedSlotsForGroup = (
   data: PlannedOutagesResponse | undefined,
   group: Group,
   day: 'today' | 'tomorrow' = 'today',
-): OutageInterval[] => {
-  if (!data || !data[group]) return [];
-  return data[group][day].slots;
+): { slots: OutageInterval[]; status: string } => {
+  if (!data || !data[group]) return { slots: [], status: 'ScheduleApplies' };
+  const schedule = data[group][day];
+  return { slots: schedule.slots, status: schedule.status };
 };
 
 /**

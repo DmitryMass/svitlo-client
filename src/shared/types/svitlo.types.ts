@@ -24,7 +24,7 @@ export interface OutageInterval {
 export interface PlannedOutageSchedule {
   slots: OutageInterval[];
   date: string;
-  status: 'ScheduleApplies' | string;
+  status: 'ScheduleApplies' | 'WaitingForSchedule' | string;
 }
 
 export interface PlannedOutageGroup {

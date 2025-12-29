@@ -19,6 +19,7 @@ interface OutageTableProps {
   isError: boolean;
   error?: Error | null;
   type: 'planned' | 'probable';
+  scheduleStatus?: string;
 }
 
 export const OutageTable = ({
@@ -28,6 +29,7 @@ export const OutageTable = ({
   isError,
   error,
   type,
+  scheduleStatus,
 }: OutageTableProps) => {
   const isRateLimitError = error instanceof RateLimitError;
 
@@ -133,6 +135,19 @@ export const OutageTable = ({
         {title}
       </h3>
 
+      {scheduleStatus === 'WaitingForSchedule' && (
+        <Alert className="mb-4 border-sky-200 bg-sky-50 shadow-sm">
+          <AlertCircle
+            className="h-5 w-5 text-blue-500"
+            color="oklch(62.3% 0.214 259.815)"
+          />
+          <AlertDescription className="text-sky-700">
+            Інформація не є остаточною. Планується відключення у зазначений час,
+            але графік ще не підтверджено.
+          </AlertDescription>
+        </Alert>
+      )}
+
       {!hasData ? (
         <Alert className="border-zinc-200 bg-white shadow-sm">
           <Lightbulb className="h-4 w-4 text-emerald-600" />
@@ -145,7 +160,7 @@ export const OutageTable = ({
         <div className="overflow-hidden rounded-lg border border-zinc-200 bg-white shadow-md">
           <Table>
             <TableHeader>
-              <TableRow className="border-b border-zinc-200 bg-gradient-to-r from-zinc-50 to-zinc-100">
+              <TableRow className="border-b border-zinc-200 bg-linear-to-r from-zinc-50 to-zinc-100">
                 <TableHead className="text-base font-semibold text-zinc-700">
                   Період
                 </TableHead>
